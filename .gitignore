@@ -3,3 +3,6 @@ __pycache__/
 output/
 *.docx
 replacements.json
+
+# keep the bundled example
+!examples/sample_resume.docx

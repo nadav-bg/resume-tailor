@@ -41,6 +41,18 @@ quick-win notes.
 > fetching or load via JavaScript. If a URL won't read cleanly, just paste the
 > text or send a screenshot — both work the same.
 
+## Try it first (no need for your own CV yet)
+
+The `examples/` folder has a sample CV and a sample posting so you can see the
+whole loop before using your own:
+
+- `examples/sample_resume.docx` — a fictional one-page CV
+- `examples/sample_job_posting.txt` — a matching job description
+
+Ask your agent: *"Tailor examples/sample_resume.docx to the posting in
+examples/sample_job_posting.txt."* You'll get a tailored `.docx` in `output/`,
+an ATS estimate, and quick-win notes. Then swap in your own `resume.docx`.
+
 ## Install the entry point for your platform
 
 - **Claude Code:** copy this folder to `~/.claude/skills/resume-tailor/` (available
