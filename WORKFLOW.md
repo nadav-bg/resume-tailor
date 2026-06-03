@@ -39,6 +39,13 @@ facts — you only re-tailor what is already in `my_cv.md`.
 
 ## STEP 1 — Read the job posting
 
+Accept the posting in **any** of three forms and read it accordingly:
+- **URL** → fetch the page (WebFetch / your platform's web tool) and read its text.
+  If the fetch is blocked or returns junk (login wall, JS-only page), ask the user
+  to paste the text or send a screenshot instead.
+- **Screenshot / image path** → read the image directly.
+- **Pasted text** → use it as-is.
+
 Extract:
 - Company name and role title (for the output filename)
 - Top 5–8 required skills / keywords

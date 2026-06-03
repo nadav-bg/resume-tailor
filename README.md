@@ -26,8 +26,10 @@ The agent reads the posting, tailors your content, writes `content.json`, and ru
    profile, roles, bullets, skills, and education. Be thorough — the agent picks
    the most relevant parts per job.
 
-2. **Prepare your template.** Take your existing CV `.docx` (or design one in
-   Word), and **type tokens where tailored content should go**. Tokens look like
+2. **Prepare your template — your own design.** Use *your* existing CV `.docx`
+   (any layout, fonts, colors, Hebrew/RTL or English/LTR — all preserved) or design
+   a fresh one in Word. **Type tokens where tailored content should go.** Tokens
+   look like
    `{{NAME}}`, `{{PROFILE_1}}`, `{{ROLE1_BULLET_1}}`, `{{SKILL_1}}`. Save it as
    `template.docx` in this folder.
    - Tip: type each token in one go so Word keeps it intact (the builder also
@@ -49,11 +51,13 @@ The agent reads the posting, tailors your content, writes `content.json`, and ru
 
 ## Use it
 
-Point your agent at a job posting and ask it to tailor your CV. Examples:
+Point your agent at a job posting and ask it to tailor your CV. The posting can be
+a **URL**, a **screenshot/image**, or **pasted text** — whichever is easiest:
 
-- Claude Code: `/resume-tailor path/to/job.png`
-- Codex / Antigravity / Cursor: *"Tailor my CV to this posting"* and paste the
-  text or give a screenshot path / URL.
+- Claude Code: `/resume-tailor https://company.com/careers/123`
+  or `/resume-tailor path/to/job.png`
+- Codex / Antigravity / Cursor: *"Tailor my CV to this posting: <url>"*, or paste
+  the description text, or give a screenshot path.
 
 The output `.docx` lands in `output/`, with an ATS estimate and quick-win notes.
 

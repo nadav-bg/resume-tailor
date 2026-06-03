@@ -2,7 +2,7 @@
 name: resume-tailor
 description: Tailor a one-page CV to a specific job posting. Provide the posting as a screenshot path, pasted text, or URL. Pulls all content strictly from the user's own my_cv.md (zero hallucinations), fills a tokenized template.docx, and outputs a .docx plus an ATS match estimate. Works in Hebrew and English. Triggers when the user wants to tailor/customize/generate a resume or CV for a job.
 argument-hint: <job-posting screenshot path | pasted text | URL>
-allowed-tools: Read, Bash, Write, Edit
+allowed-tools: Read, Bash, Write, Edit, WebFetch
 ---
 
 # Resume Tailor (Claude Code entry point)
