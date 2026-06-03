@@ -4,67 +4,55 @@ Tailor a **one-page CV to any job posting** using your own AI coding agent —
 Claude Code, OpenAI Codex, Google Antigravity, or Cursor. You bring the model;
 this repo brings the recipe.
 
-It pulls **only from your real CV** (no hallucinated experience), mirrors the
-posting's language and keywords, fills your designed Word template, and gives you
-an ATS match estimate. Works in **Hebrew and English** (RTL-safe).
+**No setup, no tokens, no template prep.** You drop in your real CV as
+`resume.docx` and point your agent at a job posting. It reads your CV exactly as
+it is, improves the wording to match the job — using only your real experience
+(no invented facts) — and saves a tailored `.docx` that keeps your original
+design. Works in **Hebrew and English** (RTL-safe).
 
 ## How it works
 
 - **`WORKFLOW.md`** — the actual logic ("the magic"), written for any agent.
 - **`SKILL.md`** — entry point for Claude Code (a native Skill).
 - **`AGENTS.md`** — entry point for Codex / Antigravity / Cursor.
-- **`my_cv.md`** — *you* fill this with your real career data (source of truth).
-- **`template.docx`** — *you* provide this: your Word CV with `{{TOKEN}}` slots.
-- **`build_cv.py`** — fills the template's tokens, language/RTL-safe.
+- **`cv_tools.py`** — reads your CV's exact text (`extract`) and applies the
+  agent's tailored edits in place (`apply`). Standard library only; UTF-8/RTL-safe;
+  handles Word's internal text-splitting automatically.
 
-The agent reads the posting, tailors your content, writes `content.json`, and runs
-`build_cv.py` to produce the final `.docx`.
-
-## One-time setup
-
-1. **Add your data.** Open `my_cv.md` and replace the placeholders with your real
-   profile, roles, bullets, skills, and education. Be thorough — the agent picks
-   the most relevant parts per job.
-
-2. **Prepare your template — your own design.** Use *your* existing CV `.docx`
-   (any layout, fonts, colors, Hebrew/RTL or English/LTR — all preserved) or design
-   a fresh one in Word. **Type tokens where tailored content should go.** Tokens
-   look like
-   `{{NAME}}`, `{{PROFILE_1}}`, `{{ROLE1_BULLET_1}}`, `{{SKILL_1}}`. Save it as
-   `template.docx` in this folder.
-   - Tip: type each token in one go so Word keeps it intact (the builder also
-     handles tokens Word splits internally, but clean tokens are safest).
-   - Use any token names you like — just make sure the agent fills the same ones.
-   - For a Hebrew CV, build the template in Hebrew/RTL as usual; the tool only
-     replaces token text and leaves your direction and styling untouched.
-
-3. **Install the entry point for your platform:**
-   - **Claude Code:** copy this folder into `~/.claude/skills/resume-tailor/`
-     (it'll be available as the `resume-tailor` skill), or keep it as a project
-     folder and let Claude read `SKILL.md`.
-   - **Codex / Antigravity / Cursor:** keep this folder as your working directory;
-     those tools auto-read `AGENTS.md`.
-
-4. **Python:** ensure Python 3 is available (`build_cv.py` uses only the standard
-   library — no install needed). The optional "generate from scratch" path in
-   WORKFLOW.md uses `python-docx` (`pip install python-docx`).
+Your `resume.docx` is the design, the template, and the source of information —
+all at once. The agent reads it, decides the improvements, and swaps the affected
+lines. Untouched lines stay exactly as they were.
 
 ## Use it
 
-Point your agent at a job posting and ask it to tailor your CV. The posting can be
-a **URL**, a **screenshot/image**, or **pasted text** — whichever is easiest:
+1. Put your CV in this folder as **`resume.docx`** (your own design — any layout,
+   fonts, language, RTL or LTR; it's preserved).
+2. Ask your agent to tailor it, giving the posting as a **URL**, a
+   **screenshot/image**, or **pasted text** — whichever is easiest:
+   - Claude Code: `/resume-tailor https://company.com/careers/123`
+     or `/resume-tailor path/to/job.png`
+   - Codex / Antigravity / Cursor: *"Tailor my CV to this posting: <url>"*, or
+     paste the description, or give a screenshot path.
 
-- Claude Code: `/resume-tailor https://company.com/careers/123`
-  or `/resume-tailor path/to/job.png`
-- Codex / Antigravity / Cursor: *"Tailor my CV to this posting: <url>"*, or paste
-  the description text, or give a screenshot path.
+The tailored `.docx` lands in `output/`, with an ATS match estimate and honest
+quick-win notes.
 
-The output `.docx` lands in `output/`, with an ATS estimate and quick-win notes.
+> Note on URLs: some job boards (LinkedIn, certain ATS pages) block automated
+> fetching or load via JavaScript. If a URL won't read cleanly, just paste the
+> text or send a screenshot — both work the same.
+
+## Install the entry point for your platform
+
+- **Claude Code:** copy this folder to `~/.claude/skills/resume-tailor/` (available
+  as the `resume-tailor` skill), or keep it as a project folder and let Claude read
+  `SKILL.md`.
+- **Codex / Antigravity / Cursor:** keep this folder as your working directory;
+  those tools auto-read `AGENTS.md`.
+- **Python 3** must be available (`cv_tools.py` uses only the standard library).
 
 ## Privacy
 
-`my_cv.md`, `template.docx`, and everything in `output/` contain your personal
-data. If you push this repo, keep it **private** or rely on the provided
-`.gitignore` (it ignores `output/`, `*.docx`, and your filled `my_cv.md` is yours
-to keep local). Never commit API keys — this tool doesn't need any; your agent
-platform supplies the model.
+`resume.docx` and everything in `output/` are your personal data. The provided
+`.gitignore` keeps `*.docx`, `output/`, and `replacements.json` out of git. If you
+fork this repo, you can keep it public — it ships no personal data. This tool needs
+no API keys; your agent platform supplies the model.

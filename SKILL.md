@@ -1,7 +1,7 @@
 ---
 name: resume-tailor
-description: Tailor a one-page CV to a specific job posting. Provide the posting as a screenshot path, pasted text, or URL. Pulls all content strictly from the user's own my_cv.md (zero hallucinations), fills a tokenized template.docx, and outputs a .docx plus an ATS match estimate. Works in Hebrew and English. Triggers when the user wants to tailor/customize/generate a resume or CV for a job.
-argument-hint: <job-posting screenshot path | pasted text | URL>
+description: Tailor a one-page CV to a specific job posting. Provide the posting as a URL, a screenshot path, or pasted text. Reads the user's real resume.docx as-is (zero setup, no hallucinations), rewrites the wording to match the job, and outputs a tailored .docx that keeps the original design, plus an ATS match estimate. Works in Hebrew and English. Triggers when the user wants to tailor/customize/generate a resume or CV for a job.
+argument-hint: <job-posting URL | screenshot path | pasted text>
 allowed-tools: Read, Bash, Write, Edit, WebFetch
 ---
 
@@ -9,10 +9,12 @@ allowed-tools: Read, Bash, Write, Edit, WebFetch
 
 Follow the full recipe in **`WORKFLOW.md`** in this folder, start to finish.
 
-- The job posting is in `$ARGUMENTS` (a screenshot path, pasted text, or URL). If
-  empty, ask the user for it.
-- The user's real CV baseline is `my_cv.md` — the only source of truth.
-- The template to fill is `template.docx` (tokenized with `{{...}}`).
-- Build the output with `build_cv.py` per WORKFLOW.md Step 5.
+- The job posting is in `$ARGUMENTS` (a URL, a screenshot path, or pasted text).
+  If empty, ask the user for it.
+- The user's CV is `resume.docx` in this folder — read its exact text with
+  `python cv_tools.py extract --doc resume.docx`. It's the only source of truth.
+- Tailor the wording, write `replacements.json`, then build the output with
+  `python cv_tools.py apply ...` per WORKFLOW.md Step 5.
 
-Do not invent any content. Match the posting's language (Hebrew or English).
+Do not invent any content. Match the posting's language (Hebrew or English) and
+preserve the CV's original design.
