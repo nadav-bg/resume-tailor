@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+output/
+*.docx
+content.json
+# my_cv.md is yours to keep local; uncomment to ignore:
+# my_cv.md
